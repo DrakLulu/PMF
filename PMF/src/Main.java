@@ -2,7 +2,8 @@
 public class Main {
 
 	public static void main(String[] args) {
-		Fenetre a = new Fenetre();
+		Window a = new Window();
+
 		controller AA= new controller();
 	}
 
