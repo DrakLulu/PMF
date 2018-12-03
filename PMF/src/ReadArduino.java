@@ -2,47 +2,30 @@ import java.util.Scanner;
 
 import arduino.Arduino;
 
-public class ReadArduino {
-	private int temp,humi, tempext;
-	public ReadArduino() {}
+public class readArduino implements Runnable {
+	Arduino frigo = new Arduino();
 
-		public void read(Arduino frigo) {
-			int i=0;
-			frigo.setPortDescription("/dev/cu.usbmodem14101");
-			frigo.openConnection();
-			Scanner sc= new Scanner(System.in);
-			
-			    while (i<20) {
-				System.out.println(frigo.serialRead());
-				frigo.serialWrite(sc.nextLine());
-			    i++;			
-		}
-			frigo.closeConnection();
-		}
-	
+	public readArduino() {
+	}
 
-		public int getTemp() {
-			return temp;
-		}
+	@Override
+	public void run() {
+		int i = 0;
+		String a;
+		frigo.setPortDescription("/dev/cu.usbmodem14101");
+		frigo.openConnection();
+		System.out.println("connecte");
 
-		public void setTemp(int temp) {
-			this.temp = temp;
-		}
+		while (i == 0) {
+			frigo.serialRead(0);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 
-		public int getHumi() {
-			return humi;
 		}
-
-		public void setHumi(int humi) {
-			this.humi = humi;
-		}
-
-		public int getTempext() {
-			return tempext;
-		}
-
-		public void setTempext(int tempext) {
-			this.tempext = tempext;
-		}
+		frigo.closeConnection();
+	}
 
 }
