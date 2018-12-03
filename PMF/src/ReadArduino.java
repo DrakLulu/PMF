@@ -3,7 +3,7 @@ import java.util.Scanner;
 import arduino.Arduino;
 
 public class ReadArduino {
-	private int temp,humi,rose;
+	private int temp,humi, tempext;
 	public ReadArduino() {}
 
 		public void read(Arduino frigo) {
@@ -37,12 +37,12 @@ public class ReadArduino {
 			this.humi = humi;
 		}
 
-		public int getRose() {
-			return rose;
+		public int getTempext() {
+			return tempext;
 		}
 
-		public void setRose(int rose) {
-			this.rose = rose;
+		public void setTempext(int tempext) {
+			this.tempext = tempext;
 		}
 
 }

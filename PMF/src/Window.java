@@ -2,7 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 	import javax.swing.JFrame;
-public class Window {
+public class Window extends JFrame {
 	
 	   public Window() {
 	      JFrame f = new JFrame();
@@ -13,6 +13,7 @@ public class Window {
 	      f.setLayout(new BorderLayout());
 	      f.setLocation(100,100); 
 	      f.setLocationRelativeTo(null);
+	      this.add(f);
 	      f.add(panel1);
 	      f.pack();
 	      f.setVisible(true);
