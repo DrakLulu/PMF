@@ -1,12 +1,13 @@
-
 import arduino.Arduino;
 
 public class controller {
-	Arduino frigo = new Arduino();
-	ReadArduino AA = new ReadArduino();
-	public controller() {
-	AA.read(frigo);
+	readArduino AA = new readArduino();
+	intel infos = new intel();
+	public controller() throws InterruptedException {
+	Thread read = new Thread(new readArduino());
+	Thread panel = new Thread(new panel());
 	
+	read.start();
 	
 	
 }
