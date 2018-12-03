@@ -2,7 +2,7 @@ import arduino.Arduino;
 
 public class controller {
 	Arduino frigo = new Arduino();
-	readArduino AA = new readArduino();
+	ReadArduino AA = new ReadArduino();
 	public controller() {
 	AA.read(frigo);
 	
