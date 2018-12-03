@@ -8,6 +8,16 @@ int peltier = 3; //The N-Channel MOSFET is on digital pin 3
 int power = 99; //Power level fro 0 to 99%
 int peltier_level = map(power, 0, 99, 0, 255); //This is a value from 0 to 255 that actually controls the MOSFET
 
+//PI
+int commande = 0;
+int consigne = 18; 
+int erreur = 0; 
+int ecart; 
+float kp = 0.3;
+int ki = 8;
+int P_x = 0;
+int I_x = 0; 
+
 void setup() {
 pinMode(A0, INPUT) ; 
 Serial.begin(9600); // ouverture connexion serie
@@ -16,7 +26,6 @@ dht.begin();
 }
 
 void loop() {
-
 float h = dht.readHumidity();    // lecture humidité et affectation a une variable de type float
 float t = dht.readTemperature(); // lecture température et affectation a une variable de type float
 
@@ -38,11 +47,13 @@ Serial.print(" Temperature DHT22: " );
 Serial.print(t);
 Serial.println(" C");
 
-if( temp < 18 ){
-  power = 0;
-} else{
-  power = 99;
-}
+ecart = consigne - temp; 
+P_x = kp * ecart;
+commande = P_x + I_x;
+I_x = I_x + ki * ecart;
+
+power = power + commande;
+
 peltier_level = map(power, 0, 99, 0, 255);
 
 Serial.print("Power=");
@@ -56,8 +67,6 @@ if(power == 99){
 } else {
   Serial.println("eteind"); 
 }
-
-
 
 delay(1000); // attente de 1 seconde avant de refaire une mesure
 }
