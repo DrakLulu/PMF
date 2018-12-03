@@ -7,6 +7,7 @@ DHT dht(DHTPIN, DHTTYPE); // instanciation objet dht
 int peltier = 3; //The N-Channel MOSFET is on digital pin 3
 int power = 99; //Power level fro 0 to 99%
 int peltier_level = map(power, 0, 99, 0, 255); //This is a value from 0 to 255 that actually controls the MOSFET
+String envoie;
 
 //PI
 int commande = 0;
@@ -42,7 +43,7 @@ void loop() {
     commande = P_x + I_x;
     I_x = I_x + ki * ecart;
     power = power + commande;*/
-      if (t > 18.0){
+      if (temp > 18.0){
         power = 99; // module peltier allume
       } else {
         power = 0; //moduel perltier eteind
@@ -52,9 +53,21 @@ void loop() {
     analogWrite(peltier, peltier_level); 
   
   if (power == 99) {
-      Serial.println(temp +","+ t +","+ h +","+ "1" );
+      Serial.print(temp);
+      Serial.print(",");
+      Serial.print(t);
+      Serial.print(",");
+      Serial.print(h);
+      Serial.print(",");
+      Serial.println(1);
     } else {
-      Serial.println(temp +","+ t +","+ h +","+ "0");
+      Serial.print(temp);
+      Serial.print(",");
+      Serial.print(t);
+      Serial.print(",");
+      Serial.print(h);
+      Serial.print(",");
+      Serial.println(0);
     }
 
     delay(1000); 
