@@ -6,7 +6,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Users/martins/Downloads/arduino.jar"/>
-	<classpathentry kind="lib" path="/Users/martins/Downloads/jSerialComm-2.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Charlotte/Documents/GitHub/PMF/arduino.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Charlotte/Documents/GitHub/PMF/jSerialComm-2.3.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
