@@ -142,12 +142,6 @@ package model;
 	    // Ignore all the other eventTypes, but you should consider the other ones.
 	}
 	
-	public void reception(Model model) {
-		
-		   model.setTemperature(chunks[0]);
-           model.setHumidite(chunks[1]);
-           model.setTempext(chunks[2]);
-           model.setAllume(chunks[3]);
-	}
+	
 }	
 
