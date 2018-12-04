@@ -173,6 +173,8 @@ public class Panel extends JPanel implements Observer, ActionListener, ItemListe
 		    g.setColor(Color.black);
 		    g.fillRect (0, 300, 50000, 10);
 		    try {
+		    	  Image im = ImageIO.read(new File("Capture.PNG")); 
+	    	      g.drawImage(im, 100, 450, this);
 	    	      Image img = ImageIO.read(new File(imagepng)); 
 	    	      g.drawImage(img, 100, 450, this);
 	    	      
@@ -194,50 +196,51 @@ public class Panel extends JPanel implements Observer, ActionListener, ItemListe
 	   	 
    	 switch (liste.getSelectedIndex()) {
    	 case 0:
-   		 imagepng = "C:\\Users\\Charlotte\\Documents\\GitHub\\PMF\\PMF\\image6.png";
+   		 imagepng = "image6.png";
    		 break;
    		 
    	 case 1:  
-   		 imagepng = "C:\\Users\\Charlotte\\Documents\\GitHub\\PMF\\PMF\\image5.png";
+   		 imagepng = "image3.png";
    		 break; 
    		 
    	 case 2:
-   		 imagepng = "C:\\Users\\Charlotte\\Documents\\GitHub\\PMF\\PMF\\image2.png";
+   		 imagepng = "image2.png";
    		 break;
    		 
    	 case 3:
-   		 imagepng = "C:\\Users\\Charlotte\\Documents\\GitHub\\PMF\\PMF\\image4.png";
+   		 imagepng = "image4.png";
    		 break; 
    		 
    	 case 4:	
-   		 imagepng = "C:\\\\Users\\\\Charlotte\\\\Documents\\\\GitHub\\\\PMF\\\\PMF\\\\image6.png";
+   		 imagepng = "image8.png";
    		 break;	
    		 
    	 case 5:	
-   		 imagepng = "C:\\Users\\Charlotte\\Documents\\GitHub\\PMF\\PMF\\image0.png";
+   		 imagepng = "image0.png";
    		 break;
    		 
    	 case 6:
-   		 imagepng = "C:\\\\Users\\\\Charlotte\\\\Documents\\\\GitHub\\\\PMF\\\\PMF\\\\image6.png";
+   		 imagepng = "image7.png";
    		 break;
    		 
    	 case 7:
-   		 imagepng = "C:\\Users\\Charlotte\\Documents\\GitHub\\PMF\\PMF\\image3.png";
+   		 imagepng = "image5.png";
    		 break;	
    		 
    	 case 8:
-   		 imagepng = "C:\\Users\\Charlotte\\Documents\\GitHub\\PMF\\PMF\\image1.png";
+   		 imagepng = "image1.png";
    		 break;
    		 
    	 case 9:
-   		 imagepng = "C:\\\\Users\\\\Charlotte\\\\Documents\\\\GitHub\\\\PMF\\\\PMF\\\\image6.png";
+   		 imagepng = "image6.png";
    		 break;
    		 
-   	 default: imagepng = "C:\\Users\\Charlotte\\Documents\\GitHub\\PMF\\PMF\\image6.png";
+   	 default: imagepng = "image6.png";
    		 break;
    		 
    	 } 
-   	
+   	System.out.println(imagepng);
+   	repaint();
 	}
 
 
