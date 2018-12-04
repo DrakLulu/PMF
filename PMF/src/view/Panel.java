@@ -12,9 +12,10 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Observable;
+import java.util.Observer;
 
-
-public class Panel extends JPanel implements ActionListener, ItemListener {
+public class Panel extends JPanel implements Observer, ActionListener, ItemListener {
 
 	 	private JButton temp;
 	    private JButton humi ;
@@ -22,21 +23,19 @@ public class Panel extends JPanel implements ActionListener, ItemListener {
 	    private JButton rose;
 	    private JButton achat;
 	    private Label affichage; 
-	    
-		private ImageIcon image; 
+	    private ImageIcon image; 
 	    private Choice liste; 
 	    private Label etat; 
 	    
-	    private String temperature; 
-	    private String humidite;
-	    private String temperaturext; 
-	    private float ptrose; 
+	    private int temperature = 0; 
+	    private int humidite = 0;
+	    private int temperaturext = 0; 
+	    private int ptrose = 0; 
 	    private String imagepng = "image6.png"; 
-	    public int allume; 
+	    public boolean allume = true; 
 	
 	    
-	    
-		public Panel() {
+	    public Panel() {
 	    	
 	    	temp = new JButton();
 	    	humi = new JButton();
@@ -63,7 +62,6 @@ public class Panel extends JPanel implements ActionListener, ItemListener {
 	    	affichage.setText("Appuyez sur un bouton");
 	    	affichage.setBounds(200, 200, 400, 50);
 	    	affichage.setBackground(Color.lightGray);
-	    	
 	    	initButtonForm();
 	    	
 	    	this.add(temp);
@@ -91,19 +89,23 @@ public class Panel extends JPanel implements ActionListener, ItemListener {
 	    	
 	    }
 	    
-	
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 	
 		switch(e.getActionCommand()) {
-		case "1": affichage.setText("La TempÃˆrature interieur du frigo est de : " + temperature + "C");
+		case "1": affichage.setText("La Température interieur du frigo est de : " + temperature + " °C");
 			break;
-		case "2": affichage.setText("Le poucrentage d'humiditÃˆ dans le frigo est de : " + humidite + " %");
+		case "2": affichage.setText("Le poucrentage d'humidité dans le frigo est de : " + humidite + " %");
 			break;
-		case "3": affichage.setText("La TempÃˆrature du Module Peltier est de : "+ temperaturext + "C");
+		case "3": affichage.setText("La Température du Module Peltier est de : "+ temperaturext + " °C");
 			break;
-		case "4": affichage.setText("Le point de rose claculer est egale : "+ ptrose +"C");
+		case "4": affichage.setText("Le point de rose claculer est à : "+ ptrose +" °C");
 			break;
 		case "5": BrowserControl.displayURL("https://www.cdiscount.com/au-quotidien/alimentaire/boissons/boissons-gazeuses-sodas/l-127011001.html");
 			break; 
@@ -116,7 +118,7 @@ public class Panel extends JPanel implements ActionListener, ItemListener {
 
 	private void listItem(Choice liste) {
 		
-		liste.addItem("Votre Boisson preferee");
+		liste.addItem("Votre Boisson préférée");
 		liste.addItem("Coca-Cola"); 
 		liste.addItem("Pepsi");
 		liste.addItem("Fanta");
@@ -139,7 +141,7 @@ public class Panel extends JPanel implements ActionListener, ItemListener {
 	    	rose.setBackground(Color.decode("#355C"));
 	    	achat.setBackground(Color.decode("#355C"));
 	    	
-	    	temp.setText("<HTML><BODY>Temperature <BR> â€¡ l'interieur<BR>du frigo</BODY></HTML>");
+	    	temp.setText("<HTML><BODY>Temperature <BR> à l'interieur<BR>du frigo</BODY></HTML>");
 	    	humi.setText("<HTML><BODY>Pourcentage<BR>d'Humidite</BODY></HTML>");
 	    	tempext.setText("<HTML><BODY>Temperature<BR> du <BR>module Peltier</BODY></HTML>");
 	    	rose.setText("<HTML><BODY> Point de <BR>rosee</BODY></HTML>");
@@ -157,7 +159,7 @@ public class Panel extends JPanel implements ActionListener, ItemListener {
 	    	rose.setBorder(new LineBorder(Color.BLACK));
 	    	achat.setBorder(new LineBorder(Color.BLACK));
 	    	
-	    	if(allume == 0) {
+	    	if(allume == false) {
 	    		etat.setBackground(Color.red);
 	    	} etat.setBackground(Color.green);
 	    	etat.setText("Etat"); 
@@ -242,64 +244,5 @@ public class Panel extends JPanel implements ActionListener, ItemListener {
 	}
 
 
-	public String getTemperature() {
-		return temperature;
-	}
-
-
-
-	public void setTemperature(String temperature) {
-		this.temperature = temperature;
-	}
-
-
-
-	public String getHumidite() {
-		return humidite;
-	}
-
-
-
-	public void setHumidite(String humidite) {
-		this.humidite = humidite;
-	}
-
-
-
-	public String getTemperaturext() {
-		return temperaturext;
-	}
-
-
-
-	public void setTemperaturext(String temperaturext) {
-		this.temperaturext = temperaturext;
-	}
-
-
-
-	public float getPtrose() {
-		return ptrose;
-	}
-
-
-
-	public void setPtrose(float ptrose) {
-		this.ptrose = ptrose;
-	}
-
-	public int getAllume() {
-		return allume;
-	}
-
-
-
-	public void setAllume(int allume) {
-		this.allume = allume;
-	}
-
-
-
-
-
+	
 }
