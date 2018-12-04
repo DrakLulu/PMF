@@ -1,28 +1,36 @@
 package controller;
 
-import arduino.Arduino;
 import model.readArduino;
-import view.Panel;
 import view.Window;
 
-public class controller {
+public class Controller {
+	
 	Window win = new Window();
 	readArduino AA = new readArduino(this);
 
-	public controller() throws InterruptedException {
-
+	public Controller() throws InterruptedException {
+	    
 		Thread read = new Thread(new readArduino(this));
 		read.start();
 
 	}
 
-	
-	public void run(String tempExt, String tempInt, String humi, String onOff) {
+
+
+	public void update(String tempInt, String tempExt, String humi, String onOff) {
+		
 		win.pan.setTemperaturext(tempExt);
 		win.pan.setTemperature(tempInt);
 		win.pan.setHumidite(humi);
+		if(onOff == "1") {
+		win.pan.setAllume(1);
+		}else win.pan.setAllume(0);
+		
+		win.pan.repaint();
 		
 	}
+
+
 
 	
 	

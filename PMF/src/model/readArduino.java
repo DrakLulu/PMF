@@ -1,25 +1,49 @@
 package model;
 
-import controller.controller;
-import view.Window;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import arduino.Arduino;
 
-public class readArduino implements Runnable {
-	Arduino frigo = new Arduino();
-	private String tempInt, tempExt, humi, onOff;
-	String vrac;
-	private controller control; 
+import controller.Controller;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 
-	public readArduino(controller cont) {
-		
-		this.control = cont; 
+public class readArduino implements Runnable, Observable {
+	Arduino frigo = new Arduino();
+	private String tempInt, tempExt, humi, onOff, rosee;
+	String vrac; 
+	private Controller control;
+	private int state;
+
+	public readArduino(Controller controller) {
+		this.control = controller; 
+	}
+	
+	@Override
+	public void addListener(InvalidationListener listener) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void removeListener(InvalidationListener listener) {
+		// TODO Auto-generated method stub
+	}
+	
+	public int getState() {
+		return state;
+	}
+
+	public void setState(int state) {
 		
 	}
+
 
 	@Override
 	public void run() {
 		int i = 0;
-		frigo.setPortDescription("/dev/cu.usbmodem14101");
+		frigo.setPortDescription("COM6");
 		frigo.openConnection();
 
 		while (i == 0) {
@@ -32,8 +56,8 @@ public class readArduino implements Runnable {
 				e1.printStackTrace();
 			}
 			Split();
-			System.out.println(tempInt);
-			System.out.println(humi);
+			
+			
 
 		}
 
@@ -41,20 +65,23 @@ public class readArduino implements Runnable {
 	}
 
 	public void Split() {
-		String[] values = vrac.split(";");
+		String[] values = vrac.split(",");
 		int size = values.length;
 		System.out.println(size);
 
 		if (size != 4) {
 			size = 0;
 		} else {
-			tempExt = values[2];
-			tempInt = values[0];
-			humi = values[1];
-			onOff = values[3];
+			this.setTempExt(values[0]);
+			this.setTempInt(values[1]);
+			this.setHumi(values[2]);
+			this.setOnOff(values[3]);
+			System.out.println(values[0]);
+			System.out.println(values[1]);
+			System.out.println(values[2]);
+			System.out.println(values[3]);
 			
-			
-			control.run(tempExt, tempInt, humi, onOff); 
+		 
 		}
 
 	}
@@ -73,6 +100,7 @@ public class readArduino implements Runnable {
 
 	public void setTempInt(String tempInt) {
 		this.tempInt = tempInt;
+		control.update(tempInt, tempExt, humi, onOff);
 	}
 
 	public String getTempExt() {
@@ -81,6 +109,7 @@ public class readArduino implements Runnable {
 
 	public void setTempExt(String tempExt) {
 		this.tempExt = tempExt;
+		control.update(tempInt, tempExt, humi, onOff);
 	}
 
 	public String getHumi() {
@@ -89,6 +118,7 @@ public class readArduino implements Runnable {
 
 	public void setHumi(String humi) {
 		this.humi = humi;
+		control.update(tempInt, tempExt, humi, onOff);
 	}
 
 	public String getOnOff() {
@@ -97,7 +127,13 @@ public class readArduino implements Runnable {
 
 	public void setOnOff(String onOff) {
 		this.onOff = onOff;
+		control.update(tempInt, tempExt, humi, onOff);
 	}
+
+
+
+
+	
 
 
 }

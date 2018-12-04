@@ -1,10 +1,19 @@
 package controller;
 
+import model.readArduino;
+
 public class Main {
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) {
 
-		controller control= new controller();
+		try {
+			
+			Controller control= new Controller();
+			
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

@@ -5,13 +5,14 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 
 import java.awt.*;
-import java.awt.List; 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Observable;
+import java.util.Observer;
 
 
 public class Panel extends JPanel implements ActionListener, ItemListener {
@@ -25,14 +26,14 @@ public class Panel extends JPanel implements ActionListener, ItemListener {
 	    
 		private ImageIcon image; 
 	    private Choice liste; 
-	    private Label etat; 
+	    private JButton etat ; 
 	    
 	    private String temperature; 
 	    private String humidite;
 	    private String temperaturext; 
 	    private float ptrose; 
 	    private String imagepng = "image6.png"; 
-	    public int allume; 
+	    public int allume = 1; 
 	
 	    
 	    
@@ -46,7 +47,7 @@ public class Panel extends JPanel implements ActionListener, ItemListener {
 	    	affichage = new Label();
 	    	image = new ImageIcon();
 	    	liste = new Choice();
-	    	etat = new Label();
+	    	etat = new JButton();
 	    	
 	    	this.setLayout(null);
 	    	
@@ -56,7 +57,7 @@ public class Panel extends JPanel implements ActionListener, ItemListener {
 	    	rose.setBounds(530, 50, 100, 100);
 	    	achat.setBounds(500, 500, 100, 100);
 	    	liste.setBounds(0, 310, 800, 50);
-	    	etat.setBounds(0, 0, 50, 50);
+	    	etat.setBounds(0, 0, 60, 40);
 	    	
 	    	listItem(liste); 
 	    	
@@ -81,6 +82,8 @@ public class Panel extends JPanel implements ActionListener, ItemListener {
 	    	rose.addActionListener(this);
 	    	achat.addActionListener(this);
 	    	liste.addItemListener(this);
+	    	etat.addActionListener(this);
+	    	
 	    	
 	    	temp.setActionCommand("1");
 	    	humi.setActionCommand("2");
@@ -88,26 +91,27 @@ public class Panel extends JPanel implements ActionListener, ItemListener {
 	    	rose.setActionCommand("4");
 	    	achat.setActionCommand("5");
 	    	
-	    	
 	    }
 	    
+	
 	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 	
 		switch(e.getActionCommand()) {
-		case "1": affichage.setText("La TempÃˆrature interieur du frigo est de : " + temperature + "C");
+		case "1": affichage.setText("La Température interieur du frigo est de : "+ temperature + "C");
 			break;
-		case "2": affichage.setText("Le poucrentage d'humiditÃˆ dans le frigo est de : " + humidite + " %");
+		case "2": affichage.setText("Le poucrentage d'humidité dans le frigo est de : "  + humidite + " %");
 			break;
-		case "3": affichage.setText("La TempÃˆrature du Module Peltier est de : "+ temperaturext + "C");
+		case "3": affichage.setText("La Température du Module Peltier est de : "+ temperaturext +"C");
 			break;
 		case "4": affichage.setText("Le point de rose claculer est egale : "+ ptrose +"C");
 			break;
 		case "5": BrowserControl.displayURL("https://www.cdiscount.com/au-quotidien/alimentaire/boissons/boissons-gazeuses-sodas/l-127011001.html");
 			break; 
-		
+		default : affichage.setText("Appuyez sur un bouton");
+			break;
 		}
 		
 	}
@@ -139,10 +143,10 @@ public class Panel extends JPanel implements ActionListener, ItemListener {
 	    	rose.setBackground(Color.decode("#355C"));
 	    	achat.setBackground(Color.decode("#355C"));
 	    	
-	    	temp.setText("<HTML><BODY>Temperature <BR> â€¡ l'interieur<BR>du frigo</BODY></HTML>");
-	    	humi.setText("<HTML><BODY>Pourcentage<BR>d'Humidite</BODY></HTML>");
-	    	tempext.setText("<HTML><BODY>Temperature<BR> du <BR>module Peltier</BODY></HTML>");
-	    	rose.setText("<HTML><BODY> Point de <BR>rosee</BODY></HTML>");
+	    	temp.setText("<HTML><BODY>Température <BR> à l'interieur<BR>du frigo</BODY></HTML>");
+	    	humi.setText("<HTML><BODY>Pourcentage<BR>d'Humidité</BODY></HTML>");
+	    	tempext.setText("<HTML><BODY>Température<BR> du <BR>module Peltier</BODY></HTML>");
+	    	rose.setText("<HTML><BODY> Point de <BR>rosée</BODY></HTML>");
 	    	achat.setText("<HTML><BODY> Achat <BR> en ligne</BODY></HTML>");
 	    	
 	    	temp.setForeground(Color.white); 
@@ -156,18 +160,19 @@ public class Panel extends JPanel implements ActionListener, ItemListener {
 	    	tempext.setBorder(new LineBorder(Color.BLACK));
 	    	rose.setBorder(new LineBorder(Color.BLACK));
 	    	achat.setBorder(new LineBorder(Color.BLACK));
-	    	
-	    	if(allume == 0) {
+	    
+		 	if(allume == 1) {
+	    		etat.setBackground(Color.green);
+	    	} else {
 	    		etat.setBackground(Color.red);
-	    	} etat.setBackground(Color.green);
+	    		}
 	    	etat.setText("Etat"); 
-	    	
-	     
 	    	
 	 }
 	 
 	 public void paintComponent(Graphics g){
 		 
+	    	
 		    g.setColor(Color.black);
 		    g.fillRect (0, 300, 50000, 10);
 		    try {
@@ -178,7 +183,8 @@ public class Panel extends JPanel implements ActionListener, ItemListener {
 	    	      
 	    	    } catch (IOException e) {
 	    	      e.printStackTrace();
-	    	    } 	  
+	    	    } 
+		  
 		  }
 
 	public Label getAffichage() {
@@ -237,7 +243,6 @@ public class Panel extends JPanel implements ActionListener, ItemListener {
    		 break;
    		 
    	 } 
-   	System.out.println(imagepng);
    	repaint();
 	}
 
@@ -297,6 +302,9 @@ public class Panel extends JPanel implements ActionListener, ItemListener {
 	public void setAllume(int allume) {
 		this.allume = allume;
 	}
+
+
+
 
 
 
