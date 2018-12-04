@@ -8,12 +8,14 @@ import java.awt.*;
 import java.awt.List; 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
-public class Panel extends JPanel implements Observer, ActionListener {
+public class Panel extends JPanel implements Observer, ActionListener, ItemListener {
 
 	 	private JButton temp;
 	    private JButton humi ;
@@ -23,11 +25,14 @@ public class Panel extends JPanel implements Observer, ActionListener {
 	    private Label affichage; 
 	    private ImageIcon image; 
 	    private Choice liste; 
+	    private Label etat; 
 	    
 	    private int temperature = 0; 
 	    private int humidite = 0;
 	    private int temperaturext = 0; 
 	    private int ptrose = 0; 
+	    private String imagepng = "image6.png"; 
+	    public boolean allume = true; 
 	
 	    
 	    public Panel() {
@@ -40,22 +45,17 @@ public class Panel extends JPanel implements Observer, ActionListener {
 	    	affichage = new Label();
 	    	image = new ImageIcon();
 	    	liste = new Choice();
+	    	etat = new Label();
 	    	
 	    	this.setLayout(null);
 	    	
-	    	this.add(temp);
-	    	this.add(humi);
-	    	this.add(tempext);
-	    	this.add(achat);
-	    	this.add(rose);
-	    	this.add(affichage);
-	    	this.add(liste);
 	    	temp.setBounds(110 , 50 , 100, 100);
 	    	humi.setBounds(250 , 50 , 100, 100);
 	    	tempext.setBounds(390, 50 , 100, 100);
 	    	rose.setBounds(530, 50, 100, 100);
 	    	achat.setBounds(500, 500, 100, 100);
 	    	liste.setBounds(0, 310, 800, 50);
+	    	etat.setBounds(0, 0, 50, 50);
 	    	
 	    	listItem(liste); 
 	    	
@@ -64,19 +64,27 @@ public class Panel extends JPanel implements Observer, ActionListener {
 	    	affichage.setBackground(Color.lightGray);
 	    	initButtonForm();
 	    	
+	    	this.add(temp);
+	    	this.add(humi);
+	    	this.add(tempext);
+	    	this.add(achat);
+	    	this.add(rose);
+	    	this.add(affichage);
+	    	this.add(liste);
+	    	this.add(etat);
+	    	
 	    	temp.addActionListener(this);
 	    	humi.addActionListener(this);
 	    	tempext.addActionListener(this);
 	    	rose.addActionListener(this);
+	    	achat.addActionListener(this);
+	    	liste.addItemListener(this);
 	    	
 	    	temp.setActionCommand("1");
 	    	humi.setActionCommand("2");
 	    	tempext.setActionCommand("3");
 	    	rose.setActionCommand("4");
-	    	
-	    	
-	    	      
-	    
+	    	achat.setActionCommand("5");
 	    	
 	    	
 	    }
@@ -99,13 +107,15 @@ public class Panel extends JPanel implements Observer, ActionListener {
 			break;
 		case "4": affichage.setText("Le point de rose claculer est à : "+ ptrose +" °C");
 			break;
+		case "5": BrowserControl.displayURL("https://www.cdiscount.com/au-quotidien/alimentaire/boissons/boissons-gazeuses-sodas/l-127011001.html");
+			break; 
 		
 		}
 		
 	}
 	  
 	
-	@SuppressWarnings("deprecation")
+
 	private void listItem(Choice liste) {
 		
 		liste.addItem("Votre Boisson préférée");
@@ -113,14 +123,15 @@ public class Panel extends JPanel implements Observer, ActionListener {
 		liste.addItem("Pepsi");
 		liste.addItem("Fanta");
 		liste.addItem("Schweppes");
-		liste.addItem("Srpite");
-		liste.addItem("Iced Tea");
+		liste.addItem("Sprite");
+		liste.addItem("Ice Tea");
 		liste.addItem("Orangina");
 		liste.addItem("7Up");
 		liste.addItem("A completer...");
 		
-		
 	}
+	
+	
 
 	 private void initButtonForm(){
 		 
@@ -129,7 +140,7 @@ public class Panel extends JPanel implements Observer, ActionListener {
 	    	tempext.setBackground(Color.decode("#355C"));
 	    	rose.setBackground(Color.decode("#355C"));
 	    	achat.setBackground(Color.decode("#355C"));
-	    	//alternate : 1F2E5C
+	    	
 	    	temp.setText("<HTML><BODY>Temperature <BR> à l'interieur<BR>du frigo</BODY></HTML>");
 	    	humi.setText("<HTML><BODY>Pourcentage<BR>d'Humidite</BODY></HTML>");
 	    	tempext.setText("<HTML><BODY>Temperature<BR> du <BR>module Peltier</BODY></HTML>");
@@ -148,22 +159,26 @@ public class Panel extends JPanel implements Observer, ActionListener {
 	    	rose.setBorder(new LineBorder(Color.BLACK));
 	    	achat.setBorder(new LineBorder(Color.BLACK));
 	    	
+	    	if(allume == false) {
+	    		etat.setBackground(Color.red);
+	    	} etat.setBackground(Color.green);
+	    	etat.setText("Etat"); 
+	    	
+	     
 	    	
 	 }
 	 
 	 public void paintComponent(Graphics g){
+		 
 		    g.setColor(Color.black);
 		    g.fillRect (0, 300, 50000, 10);
 		    try {
-	    	      Image img = ImageIO.read(new File("image6.png"));
+	    	      Image img = ImageIO.read(new File(imagepng)); 
 	    	      g.drawImage(img, 100, 450, this);
 	    	      
 	    	    } catch (IOException e) {
 	    	      e.printStackTrace();
-	    	    } 
-		    
-		    
-		    //https://www.cdiscount.com/au-quotidien/alimentaire/boissons/boissons-gazeuses-sodas/l-127011001.html 
+	    	    } 	  
 		  }
 
 	public Label getAffichage() {
@@ -173,6 +188,58 @@ public class Panel extends JPanel implements Observer, ActionListener {
 	public void setAffichage(Label affichage) {
 		this.affichage = affichage;
 	}
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+	   	 
+   	 switch (liste.getSelectedIndex()) {
+   	 case 0:
+   		 imagepng = "C:\\Users\\Charlotte\\Documents\\GitHub\\PMF\\PMF\\image6.png";
+   		 break;
+   		 
+   	 case 1:  
+   		 imagepng = "C:\\Users\\Charlotte\\Documents\\GitHub\\PMF\\PMF\\image5.png";
+   		 break; 
+   		 
+   	 case 2:
+   		 imagepng = "C:\\Users\\Charlotte\\Documents\\GitHub\\PMF\\PMF\\image2.png";
+   		 break;
+   		 
+   	 case 3:
+   		 imagepng = "C:\\Users\\Charlotte\\Documents\\GitHub\\PMF\\PMF\\image4.png";
+   		 break; 
+   		 
+   	 case 4:	
+   		 imagepng = "C:\\\\Users\\\\Charlotte\\\\Documents\\\\GitHub\\\\PMF\\\\PMF\\\\image6.png";
+   		 break;	
+   		 
+   	 case 5:	
+   		 imagepng = "C:\\Users\\Charlotte\\Documents\\GitHub\\PMF\\PMF\\image0.png";
+   		 break;
+   		 
+   	 case 6:
+   		 imagepng = "C:\\\\Users\\\\Charlotte\\\\Documents\\\\GitHub\\\\PMF\\\\PMF\\\\image6.png";
+   		 break;
+   		 
+   	 case 7:
+   		 imagepng = "C:\\Users\\Charlotte\\Documents\\GitHub\\PMF\\PMF\\image3.png";
+   		 break;	
+   		 
+   	 case 8:
+   		 imagepng = "C:\\Users\\Charlotte\\Documents\\GitHub\\PMF\\PMF\\image1.png";
+   		 break;
+   		 
+   	 case 9:
+   		 imagepng = "C:\\\\Users\\\\Charlotte\\\\Documents\\\\GitHub\\\\PMF\\\\PMF\\\\image6.png";
+   		 break;
+   		 
+   	 default: imagepng = "C:\\Users\\Charlotte\\Documents\\GitHub\\PMF\\PMF\\image6.png";
+   		 break;
+   		 
+   	 } 
+   	
+	}
+
 
 	
 }

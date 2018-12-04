@@ -12,7 +12,7 @@ import model.Model;
 
 public class View extends JFrame implements ActionListener{
 
-  private static final Color fond = Color.BEIGE;
+	
   private Panel pan = new Panel(); 
   
 
