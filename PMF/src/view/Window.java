@@ -6,18 +6,15 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 
-import controller.Controller;
-import javafx.scene.paint.Color;
-import model.Model;
 
-public class View extends JFrame implements ActionListener{
+public class Window extends JFrame implements ActionListener{
 
-	
-  private Panel pan = new Panel(); 
+  private static final Color fond = Color.lightGray;
+  	public Panel pan = new Panel(); 
   
 
 
-  public View() {
+  public Window() {
 	  
 	  this.setTitle("Frigo");
       this.setDefaultCloseOperation(EXIT_ON_CLOSE);
