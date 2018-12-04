@@ -239,7 +239,6 @@ public class Panel extends JPanel implements Observer, ActionListener, ItemListe
    		 break;
    		 
    	 } 
-   	System.out.println(imagepng);
    	repaint();
 	}
 

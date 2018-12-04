@@ -13,7 +13,7 @@ public class Model extends Observable {
 	
 	public Model() {
 	RxTx connexion = new RxTx();
-	connexion.reception(Model.this);
+	
 	}
 	
 	public String getTemperature() {
